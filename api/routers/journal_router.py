@@ -77,6 +77,10 @@ async def get_entry(entry_id: str, entry_service: EntryServiceDependency) -> Ent
     # 1. Use await entry_service.get_entry(entry_id) to fetch the entry.
     # 2. If entry is None, raise HTTPException with status_code=404.
     # 3. Return the Entry model directly (not wrapped in a dict).
+    journal_entry = await entry_service.get_entry(entry_id)
+    if journal_entry is None:
+        raise HTTPException(status_code=404, detail="Journal entry cannot be found")
+
     #
     # Example response (status 200):
     # {
@@ -87,10 +91,9 @@ async def get_entry(entry_id: str, entry_service: EntryServiceDependency) -> Ent
     #     "created_at": "...",
     #     "updated_at": "..."
     # }
-    #
+    return journal_entry
     # Hint: Check the update_entry endpoint for similar patterns.
     # See docs/04-get-entry.md for the exercise walkthrough.
-    raise HTTPException(status_code=501, detail="Not implemented - complete this endpoint!")
 
 
 @router.patch("/entries/{entry_id}")
