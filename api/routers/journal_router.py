@@ -129,7 +129,7 @@ async def delete_entry(entry_id: str, entry_service: EntryServiceDependency) -> 
     #
     if journal_entry is False:
         raise HTTPException(status_code=404, detail="Entry not found")
-    return DetailResponse(status_code=200, detail="Entry deleted successfully")
+    return DetailResponse(detail="Entry deleted successfully")
 
     # The repository atomically deletes the row and reports whether it existed.
     # Do not fetch the entry first: another request could delete it between calls.
